@@ -1,22 +1,28 @@
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import entities.BlockBuildingComponent;
+import entities.PlayerComponent;
+import entities.EntityType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
+
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Game extends GameApplication {
+    private PlayerComponent playerComponent;
+    private Entity player;
+
     public static String PLAYER_MOVED = "pixelsMoved";
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(1080);
-        settings.setHeight(1920);
+        // TODO refactor to variables
+        settings.setWidth(1000);
+        settings.setHeight(600);
         settings.setTitle("Dinosaur game");
         settings.setVersion("0.1");
     }
@@ -49,26 +55,20 @@ public class Game extends GameApplication {
         vars.put(PLAYER_MOVED, -1000);
     }
 
-    private Entity player;
-
     @Override
     protected void initGame() {
+        playerComponent = new PlayerComponent();
+
         player = entityBuilder()
-                .at(0,0)
-                .view(new Rectangle(10, 10, Color.YELLOW))
+                .type(EntityType.Player)
+                .at(0,580)
+                .view(new Rectangle(20, 20, Color.BLUE))
+                .with(new PlayerComponent(), new BlockBuildingComponent())
                 .buildAndAttach();
     }
 
     @Override
     protected void initUI() {
-        Text textPixels = new Text();
-        textPixels.setTranslateX(50); // x = 50
-        textPixels.setTranslateY(100); // y = 100
-
-        textPixels.textProperty()
-                .bind(getWorldProperties().intProperty(PLAYER_MOVED).asString());
-
-        getGameScene().addUINode(textPixels); // add to the scene graph
     }
 
     public static void main(String[] args) {
