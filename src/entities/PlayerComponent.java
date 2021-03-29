@@ -13,9 +13,8 @@ public class PlayerComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
+        // moves player forward
         latestPlayerPos.x += tpf * BLOCK_MOVE_SPEED;
-//        System.out.println(String.valueOf(latestPlayerPos.x));
-//        System.out.println(String.valueOf(latestPlayerPos.y));
         entity.translateX(latestPlayerPos.x);
     }
 }

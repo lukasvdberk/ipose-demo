@@ -1,22 +1,24 @@
+package game;
+import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
 import entities.BlockBuildingComponent;
+import entities.Player;
 import entities.PlayerComponent;
 import entities.EntityType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Game extends GameApplication {
+    public static Entity player;
     private PlayerComponent playerComponent;
-    private Entity player;
-
-    public static String PLAYER_MOVED = "pixelsMoved";
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -28,34 +30,6 @@ public class Game extends GameApplication {
     }
 
     @Override
-    protected void initInput() {
-        onKey(KeyCode.RIGHT, () -> {
-            player.translateX(5); // move right 5 pixels
-            inc(PLAYER_MOVED, +5);
-        });
-
-        onKey(KeyCode.LEFT, () -> {
-            player.translateX(-5); // move left 5 pixels
-            inc(PLAYER_MOVED, -5);
-        });
-
-        onKey(KeyCode.UP, () -> {
-            player.translateY(-5); // move up 5 pixels
-            inc(PLAYER_MOVED, +5);
-        });
-
-        onKey(KeyCode.DOWN, () -> {
-            player.translateY(5); // move down 5 pixels
-            inc(PLAYER_MOVED, +5);
-        });
-    }
-
-    @Override
-    protected void initGameVars(Map<String, Object> vars) {
-        vars.put(PLAYER_MOVED, -1000);
-    }
-
-    @Override
     protected void initGame() {
         playerComponent = new PlayerComponent();
 
@@ -64,7 +38,12 @@ public class Game extends GameApplication {
                 .at(0,580)
                 .view(new Rectangle(20, 20, Color.BLUE))
                 .with(new PlayerComponent(), new BlockBuildingComponent())
-                .buildAndAttach();
+                .build();
+
+        getGameScene().getViewport().setBounds(0, 0, Integer.MAX_VALUE, getAppHeight());
+        getGameScene().getViewport().bindToEntity(player, getAppWidth() / 5, Integer.MAX_VALUE);
+
+        spawnWithScale(player, Duration.seconds(0.86), Interpolators.BOUNCE.EASE_OUT());
     }
 
     @Override
