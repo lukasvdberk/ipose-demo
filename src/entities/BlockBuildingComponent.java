@@ -33,7 +33,7 @@ public class BlockBuildingComponent extends Component {
                     .at(lastWall + randomDistance, FXGL.getAppHeight() - wallHeight)
                     .type(EntityType.Block)
                     .viewWithBBox(new Rectangle(25, wallHeight, Color.GREEN))
-                    .collidable()
+                    .with(new CollidableComponent(true))
                     .buildAndAttach();
 
             lastWall += randomDistance;

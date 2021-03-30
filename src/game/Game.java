@@ -3,6 +3,7 @@ import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -40,7 +41,8 @@ public class Game extends GameApplication {
                 .type(EntityType.Player)
                 .with(playerComponent, new BlockBuildingComponent())
                 .at(0,550)
-                .view(new Rectangle(50, 50, Color.BLUE))
+                .viewWithBBox(new Rectangle(50, 50, Color.BLUE))
+                .with(new CollidableComponent(true))
                 .buildAndAttach();
 
         // binds player to not go outside of box
@@ -51,7 +53,12 @@ public class Game extends GameApplication {
     @Override
     protected void initPhysics() {
         onCollisionBegin(EntityType.Player, EntityType.Block, (player, wall) -> {
-            System.out.println("game over");
+            showMessage("Game over! Restart", new Runnable() {
+                @Override
+                public void run() {
+                    getGameController().startNewGame();
+                }
+            });
         });
     }
 
