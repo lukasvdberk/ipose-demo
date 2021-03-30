@@ -16,7 +16,7 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.runOnce;
 
 public class BlockBuildingComponent extends Component {
     private final double wallHeight = 50;
-    private double lastWall = FXGL.getAppWidth() / 2;
+    private double lastWall = FXGL.getAppWidth() / 5;
 
     @Override
     public void onUpdate(double tpf) {
@@ -37,7 +37,6 @@ public class BlockBuildingComponent extends Component {
                     .collidable()
                     .buildAndAttach();
 
-            System.out.println(randomDistance);
             lastWall += randomDistance;
         }
     }

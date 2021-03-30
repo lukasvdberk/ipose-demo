@@ -3,6 +3,9 @@ import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import entities.BlockBuildingComponent;
 import entities.Player;
 import entities.PlayerComponent;
@@ -35,15 +38,31 @@ public class Game extends GameApplication {
 
         player = entityBuilder()
                 .type(EntityType.Player)
-                .at(0,580)
-                .view(new Rectangle(20, 20, Color.BLUE))
-                .with(new PlayerComponent(), new BlockBuildingComponent())
-                .build();
+                .with(playerComponent, new BlockBuildingComponent())
+                .at(0,550)
+                .view(new Rectangle(50, 50, Color.BLUE))
+                .buildAndAttach();
 
+        // binds player to not go outside of box
         getGameScene().getViewport().setBounds(0, 0, Integer.MAX_VALUE, getAppHeight());
-        getGameScene().getViewport().bindToEntity(player, getAppWidth() / 5, Integer.MAX_VALUE);
+        // updates viewport on player move. like a camera
+        getGameScene().getViewport().bindToEntity(player, getAppWidth() / 6, getAppHeight());
+    }
+    @Override
+    protected void initPhysics() {
+        onCollisionBegin(EntityType.Player, EntityType.Block, (player, wall) -> {
+            System.out.println("game over");
+        });
+    }
 
-        spawnWithScale(player, Duration.seconds(0.86), Interpolators.BOUNCE.EASE_OUT());
+    @Override
+    protected void initInput() {
+        getInput().addAction(new UserAction("Jump") {
+            @Override
+            protected void onActionBegin() {
+                playerComponent.jump();
+            }
+        }, KeyCode.SPACE);
     }
 
     @Override
