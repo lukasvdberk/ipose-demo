@@ -1,20 +1,21 @@
-package game;
+package main;
 import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import entities.BlockBuildingComponent;
-import entities.Player;
-import entities.PlayerComponent;
-import entities.EntityType;
+import main.entities.blocks.BlockBuildingComponent;
+import main.entities.player.PlayerComponent;
+import main.entities.EntityType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import main.entities.player.PlayerFactory;
 
 import java.util.Map;
 
@@ -37,13 +38,7 @@ public class Game extends GameApplication {
     protected void initGame() {
         playerComponent = new PlayerComponent();
 
-        player = entityBuilder()
-                .type(EntityType.Player)
-                .with(playerComponent, new BlockBuildingComponent())
-                .at(0,550)
-                .viewWithBBox(new Rectangle(50, 50, Color.BLUE))
-                .with(new CollidableComponent(true))
-                .buildAndAttach();
+        player = PlayerFactory.createPlayerEntity(playerComponent);
 
         // binds player to not go outside of box
         getGameScene().getViewport().setBounds(0, 0, Integer.MAX_VALUE, getAppHeight());
@@ -74,6 +69,7 @@ public class Game extends GameApplication {
 
     @Override
     protected void initUI() {
+        FXGL.getGameScene().setBackgroundRepeat("background.jpeg");
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package entities;
+package main.entities.player;
 
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
@@ -7,12 +7,12 @@ import javafx.util.Duration;
 
 public class PlayerComponent extends Component {
     public static float BLOCK_MOVE_SPEED = 200F;
-    public static float FALL_SPEED = 100F;
+    public static float FALL_SPEED = 200F;
 
-    private final int BLOCK_SIZE = 50;
+    public static final int BLOCK_SIZE = 55;
 
     // start on outer right minus block size
-    private Vec2 latestPlayerPos = new Vec2(0,550);
+    private Vec2 latestPlayerPos = new Vec2(0,(float) (FXGL.getAppHeight() - BLOCK_SIZE));
     private boolean isJumping = false;
     private float amountToJump = 0F;
 
@@ -55,13 +55,13 @@ public class PlayerComponent extends Component {
 
     private void jumpPlayerForGivenFrame(double tpf) {
         // jump the player
-        float amountJumpedInframe = (amountToJump * (float) tpf) * (FALL_SPEED * (float) tpf);
+        float amountJumpedInframe = (amountToJump * (float) tpf) * ((FALL_SPEED) * (float) tpf);
         amountToJump -= amountJumpedInframe;
         latestPlayerPos.y -= amountJumpedInframe;
 
-        if(amountToJump <= 10) {
+        if(amountToJump <= 1) {
             isJumping = false;
-            latestPlayerPos.y = (float) (FXGL.getAppHeight() - BLOCK_SIZE);
+//            latestPlayerPos.y = (float) (FXGL.getAppHeight() - BLOCK_SIZE);
         }
     }
 
@@ -75,12 +75,12 @@ public class PlayerComponent extends Component {
     }
 
     private void pullPlayerDownWords(double tpf) {
-        latestPlayerPos.y += (tpf * FALL_SPEED);
+        latestPlayerPos.y += (tpf * (FALL_SPEED));
     }
 
     public void jump() {
         if(!isJumping) {
-            amountToJump = BLOCK_SIZE * 4;
+            amountToJump = BLOCK_SIZE * 6;
             isJumping = true;
         }
     }

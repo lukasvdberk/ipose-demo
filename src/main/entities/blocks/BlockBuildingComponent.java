@@ -1,21 +1,17 @@
-package entities;
+package main.entities.blocks;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import game.Game;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
+import main.entities.EntityType;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 import static com.almasb.fxgl.dsl.FXGL.spawnWithScale;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.runOnce;
 
 public class BlockBuildingComponent extends Component {
-    private final double wallHeight = 50;
+    private final double wallHeight = 125;
     private double lastWall = FXGL.getAppWidth() / 5;
 
     @Override
@@ -32,7 +28,7 @@ public class BlockBuildingComponent extends Component {
             entityBuilder()
                     .at(lastWall + randomDistance, FXGL.getAppHeight() - wallHeight)
                     .type(EntityType.Block)
-                    .viewWithBBox(new Rectangle(25, wallHeight, Color.GREEN))
+                    .viewWithBBox("spuit.jpeg")
                     .with(new CollidableComponent(true))
                     .buildAndAttach();
 
