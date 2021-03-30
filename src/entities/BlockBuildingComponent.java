@@ -27,17 +27,20 @@ public class BlockBuildingComponent extends Component {
 
     private void buildWalls() {
         for (int i = 1; i <= 10; i++) {
-            double randomDistance =     Math.random() * (500 - 200 + 1) + 200;
-
+            double randomDistance = getRandomDistance();
             // builds new walls to jump over
             entityBuilder()
                     .at(lastWall + randomDistance, FXGL.getAppHeight() - wallHeight)
                     .type(EntityType.Block)
-                    .viewWithBBox(new Rectangle(50, wallHeight, Color.GREEN))
+                    .viewWithBBox(new Rectangle(25, wallHeight, Color.GREEN))
                     .collidable()
                     .buildAndAttach();
 
             lastWall += randomDistance;
         }
+    }
+
+    private double getRandomDistance() {
+        return Math.random() * (201) + 400;
     }
 }
