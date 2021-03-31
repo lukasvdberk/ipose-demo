@@ -19,10 +19,9 @@ public class PlayerComponent extends Component {
     public PlayerComponent() {
         // move the player every 10 seconds faster to increase speed
         FXGL.getGameTimer().runAtInterval(() -> {
-            BLOCK_MOVE_SPEED *= 1.2;
-            FALL_SPEED *= 1.2;
-            FXGL.showMessage("Increased speed!");
-        }, Duration.seconds(10));
+            BLOCK_MOVE_SPEED *= 1.02;
+            FALL_SPEED *= 1.02;
+        }, Duration.seconds(1));
     }
 
     @Override
@@ -61,7 +60,6 @@ public class PlayerComponent extends Component {
 
         if(amountToJump <= 1) {
             isJumping = false;
-//            latestPlayerPos.y = (float) (FXGL.getAppHeight() - BLOCK_SIZE);
         }
     }
 

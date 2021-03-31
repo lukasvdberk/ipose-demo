@@ -51,6 +51,7 @@ public class Game extends GameApplication {
             showMessage("Game over! Restart", new Runnable() {
                 @Override
                 public void run() {
+                    playerComponent = new PlayerComponent();
                     getGameController().startNewGame();
                 }
             });
