@@ -6,8 +6,8 @@ import com.almasb.fxgl.entity.component.Component;
 import javafx.util.Duration;
 
 public class PlayerComponent extends Component {
-    public static float BLOCK_MOVE_SPEED = 200F;
-    public static float FALL_SPEED = 200F;
+    public float BLOCK_MOVE_SPEED = 200F;
+    public float FALL_SPEED = 200F;
 
     public static final int BLOCK_SIZE = 55;
 
@@ -17,6 +17,9 @@ public class PlayerComponent extends Component {
     private float amountToJump = 0F;
 
     public PlayerComponent() {
+        FALL_SPEED = 200F;
+        BLOCK_MOVE_SPEED = 200F;
+
         // move the player every 10 seconds faster to increase speed
         FXGL.getGameTimer().runAtInterval(() -> {
             BLOCK_MOVE_SPEED *= 1.02;

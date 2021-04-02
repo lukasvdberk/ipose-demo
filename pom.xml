@@ -33,7 +33,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Game</mainClass>
+                            <mainClass>main.Game</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
